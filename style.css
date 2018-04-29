@@ -46,7 +46,7 @@ h1, h2 {
 
 #sidebar {
     background: var(--light-gray);
-    padding: 15px;
+    padding: 15px 15px 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -80,6 +80,6 @@ button:hover {
     padding: 10px 0;
 }
 
-#companies {
+#stocks {
     background: lightgreen;
 }
