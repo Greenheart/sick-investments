@@ -9,9 +9,18 @@ class Game {
 
     }
 
+    bindUI () {
+        // TODO: Bind UI to handle events.
+        // Add generic event handlers to handle stock interactions.
+        // This way, individual stocks don't need their own listeners.        
+    }
+
     getDOMReferences () {
         const find = document.querySelector.bind(document)
         return {
+            templates: {
+                stock: find('#stock-template')
+            },
             stats: find('#stats'),
             stocks: find('#stocks')
         }

@@ -23,6 +23,17 @@
             <section id="stocks"></section>
         </main>
 
+        <template id="stock-template">
+            <div class="stock" data-stock-id="">
+                <h3></h3>
+                <p>$<span class="price"></span> per share</p>
+                <div>
+                    <button class="buy">Buy</button>
+                    <button class="sell">Sell</button>
+                </div>
+            </div>
+        </template>
+
         <script src="data/stocks.js"></script>
 
         <script src="js/stock.js"></script>
