@@ -1,0 +1,51 @@
+:root {
+    --header-height: 60px;
+}
+
+body {
+    box-sizing: border-box;
+    background: white;
+    text-align: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: tomato;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h1, h2 {
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px black;
+}
+
+#game {
+    display: grid;
+    grid-template-columns: 20fr 80fr;
+    height: calc(100vh - var(--header-height));
+}
+
+aside {
+    background: skyblue;
+}
+
+#companies {
+    background: lightgreen;
+}
