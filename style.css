@@ -130,9 +130,18 @@ button:not(:disabled):hover {
     border-radius: 3px;
 }
 
-.stock p {
+.stock .content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-content: space-around;
+    height: 100%;
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 20px;
+}
+
+.stock .content div {
+    width: 50%;
 }
 
 .stock .actions {

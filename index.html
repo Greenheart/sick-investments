@@ -26,7 +26,12 @@
         <template id="stock-template">
             <div class="stock" data-stock-id="">
                 <h3></h3>
-                <p>$<span class="price"></span> per share</p>
+                <div class="content">
+                    <div>Price: $<span class="price"></span> per share <span class="price-change"></span></div>
+                    <div>You own: <span class="amount">57</span></div>
+                    <div>Total Cost: $<span class="total-cost">1240</span></div>
+                    <div>Value Change: <span class="value-change">+ $57</span></div>
+                </div>
                 <div class="actions">
                     <button data-action="buy">Buy</button>
                     <button data-action="sell">Sell</button>
