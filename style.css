@@ -22,6 +22,10 @@ body {
 }
 
 header {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100vw;
     background: tomato;
     height: var(--header-height);
     display: flex;
@@ -46,12 +50,17 @@ h1, h2, h3 {
 }
 
 #game {
+    position: fixed;
+    left: 0;
+    margin-top: var(--header-height);
     display: grid;
     grid-template-columns: 20fr 80fr;
     height: calc(100vh - var(--header-height));
+    width: 100vw;
 }
 
 #sidebar {
+    height: calc(100vh - var(--header-height));
     background: var(--light-gray);
     padding: 15px 15px 12px;
     display: flex;
@@ -95,4 +104,18 @@ button:hover {
 
 #stocks {
     background: lightgreen;
+    padding: 25px;
+    display: grid;
+    overflow-y: auto;
+    grid-template-columns: 50fr 50fr;
+    grid-gap: 25px;
+}
+
+.stock {
+    background: var(--light-gray);
+    padding: 15px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

@@ -12,7 +12,8 @@ class Game {
     bindUI () {
         // TODO: Bind UI to handle events.
         // Add generic event handlers to handle stock interactions.
-        // This way, individual stocks don't need their own listeners.        
+        // This way, individual stocks don't need their own listeners.
+        // Bind button#next-day to the space-key.
     }
 
     getDOMReferences () {
