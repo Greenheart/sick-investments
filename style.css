@@ -78,6 +78,14 @@ h1, h2, h3 {
 
 #stats {
     flex-grow: 1;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 20px;
+}
+
+#stats div {
+    display: flex;
+    padding: 5px 10px;
+    justify-content: space-between;
 }
 
 
