@@ -1,7 +1,7 @@
 class Player {
     constructor (game) {
         this.game = game
-        this.money = 100
+        this.balance = 100
         this.shares = {}
     }
 
@@ -22,7 +22,7 @@ class Player {
         this.shares[stock.id].transactions.push(
             new Transaction(Transaction.BUY, stock.price, amount, this.game.day)
         )
-        this.money -= stock.price
+        this.balance -= stock.price
         console.log('BUY: ', this.shares[stock.id])
     }
 
@@ -33,7 +33,7 @@ class Player {
             this.shares[stock.id].transactions.push(
                 new Transaction(Transaction.SELL, stock.price, amount, this.game.day)
             )
-            this.money += stock.price
+            this.balance += stock.price
             console.log('SELL: ', this.shares[stock.id])
         }
     }
