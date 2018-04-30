@@ -11,7 +11,7 @@ class Game {
     }
 
     showAllStocks () {
-        Object.values(this.stocks).forEach(s => s.show())
+        this.stocks.all.forEach(s => s.show())
     }
 
     bindUI () {

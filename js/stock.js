@@ -12,6 +12,10 @@ class Stock {
         this.sellButton = this.viewComponent.querySelector('[data-action="sell"]')
     }
 
+    update () {
+        // TODO: Update price
+    }
+
     show () {
         this.priceText.innerText = this.price
 
@@ -47,6 +51,12 @@ class Stock {
         for (const stock of configs) {
             stocks[stock.id] = new Stock(game, stock)
         }
+
+        // Cache stock instances to easily iterate over them.
+        // This property `stocks.all` is not enumerable, meaning it won't show up in loops or Object.keys().
+        // Since these are references to the actual stock instances, they automatically stay updated.
+        Object.defineProperty(stocks, 'all', { value: Object.values(stocks) })
+
         return stocks
     }
 }
