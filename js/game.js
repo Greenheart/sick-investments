@@ -7,7 +7,11 @@ class Game {
     }
 
     start () {
+        this.showAllStocks()
+    }
 
+    showAllStocks () {
+        Object.values(this.stocks).forEach(s => s.show())
     }
 
     bindUI () {
@@ -16,7 +20,9 @@ class Game {
         this.ui.stocks.addEventListener('click', event => {
             if (event.target.dataset.action) {
                 const stockId = event.target.parentElement.parentElement.dataset.stockId
+                // Trigger the correct handler for this action.
                 this.player[event.target.dataset.action](this.stocks[stockId])
+                this.showAllStocks()
             }
         })
 

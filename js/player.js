@@ -13,12 +13,14 @@ class Player {
                 amount: 0
             }
         }
+        this.money -= stock.price
         this.shares[stock.id].amount++
         console.log('BUY: ', this.shares[stock.id])
     }
 
     sell (stock) {
         if (this.shares[stock.id] && this.shares[stock.id].amount) {
+            this.money += stock.price
             this.shares[stock.id].amount--
             console.log('SELL: ', this.shares[stock.id])
         }
