@@ -7,10 +7,13 @@ class Player {
 
     buy (stock) {
         if (!this.shares[stock.id]) {
+            // IDEA: Maybe refactor as a `Share` class and keep an instance instead of a loose object.
+            // This could also allow custom logic to be broken out of the player class.
             this.shares[stock.id] = {
                 id: stock.id,
                 amount: 0,
-                transactions: []
+                transactions: [],
+                totalCost: 0
             }
         }
         // IDEA: Allow custom amounts other than 1.
@@ -23,6 +26,7 @@ class Player {
             new Transaction(Transaction.BUY, stock.price, amount, this.game.day)
         )
         this.balance -= stock.price
+        this.shares[stock.id].totalCost += stock.price
         console.log('BUY: ', this.shares[stock.id])
     }
 
@@ -34,6 +38,7 @@ class Player {
                 new Transaction(Transaction.SELL, stock.price, amount, this.game.day)
             )
             this.balance += stock.price
+            this.shares[stock.id].totalCost -= stock.price
             console.log('SELL: ', this.shares[stock.id])
         }
     }
