@@ -1,5 +1,6 @@
 class Game {
     constructor (stocks) {
+        this.day = 1
         this.player = new Player(this)
         this.ui = this.getDOMReferences()
         this.stocks = Stock.loadAll(this, stocks)
