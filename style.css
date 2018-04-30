@@ -44,6 +44,7 @@ h1 {
     font-size: 40px;
     color: white;
     text-shadow: 1px 1px var(--black);
+    height: 100%;
 }
 
 h2 {
