@@ -9,6 +9,18 @@ class Game {
 
     start () {
         this.showAllStocks()
+        this.showStats()
+    }
+
+    showStats () {
+        const values = {
+            'day': this.day,
+            'balance': this.player.balance
+        }
+
+        for (const stat of this.ui.stats.children) {
+            stat.querySelector('.value').innerText = values[stat.dataset.value]
+        }
     }
 
     showAllStocks () {
@@ -24,6 +36,7 @@ class Game {
                 // Trigger the correct handler for this action.
                 this.player[event.target.dataset.action](this.stocks[stockId])
                 this.showAllStocks()
+                this.showStats()
             }
         })
 
