@@ -13,7 +13,7 @@ class Player {
                 id: stock.id,
                 amount: 0,
                 transactions: [],
-                totalCost: 0
+                totalInvestment: 0
             }
         }
         // IDEA: Allow custom amounts other than 1.
@@ -26,7 +26,7 @@ class Player {
             new Transaction(Transaction.BUY, stock.price, amount, this.game.day)
         )
         this.balance -= stock.price
-        this.shares[stock.id].totalCost += stock.price
+        this.shares[stock.id].totalInvestment += stock.price
         console.log('BUY: ', this.shares[stock.id])
     }
 
@@ -38,7 +38,7 @@ class Player {
                 new Transaction(Transaction.SELL, stock.price, amount, this.game.day)
             )
             this.balance += stock.price
-            this.shares[stock.id].totalCost -= stock.price
+            this.shares[stock.id].totalInvestment -= stock.price
             console.log('SELL: ', this.shares[stock.id])
         }
     }
