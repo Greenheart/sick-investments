@@ -19,7 +19,7 @@ class Stock {
     show () {
         this.priceText.innerText = this.price
 
-        if (this.game.player.money >= this.price) {
+        if (this.game.player.balance >= this.price) {
             Helpers.enable(this.buyButton)
         } else {
             Helpers.disable(this.buyButton)
