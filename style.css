@@ -148,7 +148,7 @@ button:not(:disabled):hover {
 }
 
 .stock .actions button:disabled {
-    opacity: .8;
+    opacity: .5;
 }
 
 .stock .actions button:not(:disabled):hover {
