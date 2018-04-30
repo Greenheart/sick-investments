@@ -1,14 +1,21 @@
 :root {
     --header-height: 60px;
-    --light-gray: #f5f5f5;
+
+    --black: #020405;
+    --light-gray: #e9ebec;
+    --white-gray: #f9f9f9;
+    --light-blue: #29b6f6;
+    --yellow: #fde74c;
+    --green: #9fd356;
+    --red: #e55934;
 }
 
 html {
+    color: var(--black);
     box-sizing: border-box;
 }
 
 body {
-    background: white;
     text-align: center;
     font-family: 'Raleway', sans-serif;
 }
@@ -26,7 +33,7 @@ header {
     left: 0;
     position: fixed;
     width: 100vw;
-    background: tomato;
+    background: var(--yellow);
     height: var(--header-height);
     display: flex;
     align-items: center;
@@ -36,7 +43,7 @@ header {
 h1 {
     font-size: 40px;
     color: white;
-    text-shadow: 1px 1px black;
+    text-shadow: 1px 1px var(--black);
 }
 
 h2 {
@@ -54,7 +61,7 @@ h1, h2, h3 {
     left: 0;
     margin-top: var(--header-height);
     display: grid;
-    grid-template-columns: 20fr 80fr;
+    grid-template-columns: minmax(250px, 20fr) 80fr;
     height: calc(100vh - var(--header-height));
     width: 100vw;
 }
@@ -90,7 +97,7 @@ button:hover {
 
 #next-day {
     font-size: 24px;
-    background: #29b6f6;
+    background: var(--light-blue);
     border: 0;
     padding: 10px 0;
     transition: margin 0.05s ease-out;
@@ -103,7 +110,7 @@ button:hover {
 }
 
 #stocks {
-    background: lightgreen;
+    background: var(--white-gray);
     padding: 25px;
     display: grid;
     overflow-y: auto;
@@ -118,4 +125,36 @@ button:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 2px 2px rgba(0, 0, 0, .1);
+    border-radius: 3px;
+}
+
+.stock p {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 20px;
+}
+
+.stock .actions {
+    display: flex;
+    justify-content: center;
+}
+
+.stock .actions button {
+    width: 175px;
+    height: 40px;
+    font-size: 16px;
+    margin: 0 20px;
+}
+
+.stock .actions button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 3px rgba(0, 0, 0, .05);
+}
+
+[data-action="buy"] {
+    background: var(--green);
+}
+
+[data-action="sell"] {
+    background: var(--red);
 }
