@@ -8,8 +8,12 @@ class Game {
     }
 
     start () {
-        this.showAllStocks()
-        this.showStats()
+        this.updateUI()
+    }
+
+    nextDay () {
+        this.day++
+        this.updateUI()
     }
 
     showStats () {
@@ -27,6 +31,11 @@ class Game {
         this.stocks.all.forEach(s => s.show())
     }
 
+    updateUI () {
+        this.showAllStocks()
+        this.showStats()
+    }
+
     bindUI () {
         // Handle interactions with stock action buttons in a generic way.
         // This way, a single event listener is used.
@@ -35,12 +44,14 @@ class Game {
                 const stockId = event.target.parentElement.parentElement.dataset.stockId
                 // Trigger the correct handler for this action.
                 this.player[event.target.dataset.action](this.stocks[stockId])
-                this.showAllStocks()
-                this.showStats()
+                this.updateUI()
             }
         })
 
         // Bind button#next-day to the space-key.
+        this.ui.nextDay.addEventListener('click', event => {
+            this.nextDay()
+        })
     }
 
     getDOMReferences () {
@@ -50,7 +61,8 @@ class Game {
                 stock: find('#stock-template')
             },
             stats: find('#stats'),
-            stocks: find('#stocks')
+            stocks: find('#stocks'),
+            nextDay: find('#next-day')
         }
     }
 }
