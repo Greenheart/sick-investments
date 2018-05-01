@@ -4,5 +4,22 @@ const Helpers = {
     },
     disable (element) {
         element.setAttribute('disabled', 'disabled')
+    },
+    randomInt (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+    },
+    precisionRound (number, precision) {
+        // Round a floating point number to a given precision
+        // If precision < 0, the number of significant digits will decrease by `precision`.
+        // If precision > 0, `precision` defines the number of decimals to be kept.
+
+        // This method uses scaling to avoid issues with floating point numbers in JS.
+        // Credit: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round#A_better_solution
+        function shift (number, precision, reverseShift) {
+            if (reverseShift) precision = -precision
+            const numArray = ('' + number).split('e')
+            return +(numArray[0] + 'e' + (numArray[1] ? (+numArray[1] + precision) : precision))
+        }
+        return shift(Math.round(shift(number, precision, false)), precision, true)
     }
 }
