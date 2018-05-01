@@ -25,8 +25,8 @@ class Player {
         this.shares[stock.id].transactions.push(
             new Transaction(Transaction.BUY, stock.price, amount, this.game.day)
         )
-        this.balance -= stock.price
-        this.shares[stock.id].totalInvestment += stock.price
+        this.balance = Helpers.precisionRound(this.balance - stock.price, 1)
+        this.shares[stock.id].totalInvestment = Helpers.precisionRound(this.shares[stock.id].totalInvestment + stock.price, 1)
         console.log('BUY: ', this.shares[stock.id])
     }
 
@@ -37,8 +37,8 @@ class Player {
             this.shares[stock.id].transactions.push(
                 new Transaction(Transaction.SELL, stock.price, amount, this.game.day)
             )
-            this.balance += stock.price
-            this.shares[stock.id].totalInvestment -= stock.price
+            this.balance = Helpers.precisionRound(this.balance + stock.price, 1)
+            this.shares[stock.id].totalInvestment = Helpers.precisionRound(this.shares[stock.id].totalInvestment - stock.price, 1)
             console.log('SELL: ', this.shares[stock.id])
         }
     }
