@@ -10,6 +10,21 @@ class Stock {
         // Integer between 1 and 10. Default value from stock config, but changing over time.
         this.stability = config.stability
 
+        // The stock hype acts as a multiplier for the price changes (both good and bad).
+        // Hype builds up over time, increasing when the stock is doing well and decreasing otherwise.
+        // High hype -> big price changes. Low hype -> small price changes
+        // Integer between 1 and 10, randomized at the start, but changing over time.
+        this.hype = this.getHype()
+
+        // The prospect
+        this.prospect = this.getProspect()
+
+        // IDEA: Keep track of how the stock has been doing, saving all daily results and price changes.
+        this.results = {
+            today: null,
+            yesterday: null
+        }
+
         // UI components
         this.viewComponent = this.createViewComponent()
         this.priceText = this.viewComponent.querySelector('.price')
@@ -22,7 +37,56 @@ class Stock {
     }
 
     update () {
+        const result = this.getDailyResult()
+        const diff = (this.prospect - result) / this.stability
+        const percent = Helpers.precisionRound(diff * 100, 1) + ' %'
+
         // TODO: Update price
+        // See if the daily result was within the daily prospect
+        // if so, price goes up
+        // else, price goes down
+
+        // A prospect of 0.7 means that the result has to be <= 0.7 if the day should be successful.
+        if (result <= this.prospect) {
+            console.log(this.id, '   -   SUCCESS    -   ', percent)
+        } else {
+            console.log(this.id, '   -   FAIL    -   ', percent)
+        }
+
+        const changeFactor = 1 + diff
+        console.log(this.price, changeFactor)
+        this.price = Helpers.precisionRound(this.price * changeFactor, 1)
+        console.log(this.price)
+
+
+
+        this.nextDay()
+    }
+
+    nextDay () {
+        this.prospect = this.getProspect()
+    }
+
+    getDailyResult () {
+        return Math.random()
+    }
+
+    getHype () {
+        return Helpers.randomInt(1, 10)
+
+        // TODO: Calculate the hype based on how well the stock is doing.
+        // If the stock price increased despite bad `stock.prospect`, hype increase more.
+        // If the stock price decreased despite good `stock.prospect`, hype decrease more.
+        // if (this.hype) {
+        //
+        // } else {
+        //     return Helpers.randomInt(1, 10)
+        // }
+    }
+
+    getProspect () {
+        // TODO: Calculate the chance of success
+        return Math.random()
     }
 
     show () {
