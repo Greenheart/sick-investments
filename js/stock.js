@@ -5,6 +5,11 @@ class Stock {
         this.name = config.name
         this.price = config.price
 
+        // The stock stability affect the rate of price changes.
+        // Low stability -> rapid price changes. High stability -> slow price changes.
+        // Integer between 1 and 10. Default value from stock config, but changing over time.
+        this.stability = config.stability
+
         // UI components
         this.viewComponent = this.createViewComponent()
         this.priceText = this.viewComponent.querySelector('.price')
