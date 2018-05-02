@@ -13,7 +13,7 @@ class Game {
 
     nextDay () {
         this.day++
-        this.stocks.all.forEach(s => s.update())
+        this.stocks.all.forEach(s => s.updatePrice())
         this.updateUI()
     }
 

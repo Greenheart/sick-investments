@@ -36,7 +36,7 @@ class Stock {
         this.sellButton = this.viewComponent.querySelector('[data-action="sell"]')
     }
 
-    update () {
+    updatePrice () {
         const result = this.getDailyResult()
         const diff = (this.prospect - result) / this.stability
         const percent = Helpers.precisionRound(diff * 100, 1) + ' %'
@@ -57,10 +57,14 @@ class Stock {
         console.log(this.price, changeFactor)
         this.price = Helpers.precisionRound(this.price * changeFactor, 1)
         console.log(this.price)
-
-
-
         this.nextDay()
+    }
+
+    update () {
+        const shares = this.game.player.shares[this.id]
+        if (shares) {
+            this.game.player.updateProfit(shares, this)
+        }
     }
 
     nextDay () {
@@ -90,12 +94,16 @@ class Stock {
     }
 
     show () {
+        // Ensure latest data is used.
+        this.update()
+
         // TODO: Hide data by default when there's nothing to display.
         const shares = this.game.player.shares[this.id]
         this.priceText.innerText = this.price
         if (shares) {
             this.amountText.innerText = shares.amount
             this.totalInvestment.innerText = shares.totalInvestment
+            this.profit.innerText = shares.profit
             // TODO: Update `profit` and `sign` later.
             // const currentValue = shares.amount * this.price
             // this.profit.innerText = shares.transactions.length ? currentValue - shares.totalInvestment : ''
