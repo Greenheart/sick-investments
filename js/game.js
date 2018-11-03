@@ -53,11 +53,16 @@ class Game {
     }
 
     initializeRapidFire () {
-        const triggerCallback = () => this.nextDay()
-        const rapidCallback = triggerCallback
+        // Use arrow functions to bind the context of `this`.
+        const triggerCallback = event => {
+            this.nextDay()
+            event.preventDefault()
+        }
+        const rapidCallback = () => this.nextDay()
         const delay = 500
         const interval = 143 // 143 ms between each fire gives ~7 executions per second.
         Helpers.pointerRapidFire(this.ui.nextDay, rapidCallback, delay, interval, triggerCallback)
+        Helpers.keydownRapidFire(' ', rapidCallback, delay, interval, triggerCallback)
     }
 
     getDOMReferences () {

@@ -23,7 +23,7 @@ const Helpers = {
         return +(numArray[0] + 'e' + (numArray[1] ? (+numArray[1] + precision) : precision))
     },
     /**
-     * Enable pointer events to trigger rapidFire for a target element.
+     * Enable pointer events to trigger rapid fire for a target element.
      *
      * @param {HTMLElement} target - The element used to control rapid fire.
      * @param {function} rapidCallback - The function to call rapidly.
@@ -63,5 +63,53 @@ const Helpers = {
         })
         target.addEventListener('click', stopRapidFire)
         target.addEventListener('pointerout', stopRapidFire)
+    },
+    /**
+     * Enable keydown events to trigger rapid fire for a callback.
+     *
+     * @param {string} key - The key used to control rapid fire. Expects a `KeyboardEvent.key` value.
+     * @param {function} rapidCallback - The function to call rapidly.
+     * @param {number} delay - The delay (in ms) before rapid fire begins.
+     * @param {number} interval - The time (in ms) between each call to rapidCallback.
+     * @param {function} triggerCallback - Executed when the initial event triggers rapid fire.
+     * @param {EventTarget} target - The target element where rapid fire should be possible.
+     */
+    keydownRapidFire (key, rapidCallback, delay = 0, interval = 100, triggerCallback = null, target = window) {
+        // The timeout that starts rapid fire. Used when aborting rapid fire before it's even started.
+        let rapidFireTimeout = null
+        // The interval that triggers rapid fire. Used to abort rapid fire.
+        let rapidFire = null
+
+        function startRapidFire () {
+            // Only start one rapid fire interval at a time.
+            if (!rapidFire) {
+                rapidFire = window.setInterval(rapidCallback, interval)
+            }
+        }
+
+        function stopRapidFire () {
+            // Stop rapid fire before it's even started.
+            if (rapidFireTimeout) {
+                window.clearTimeout(rapidFireTimeout)
+                rapidFireTimeout = null
+            }
+
+            // Stop the active rapid fire interval.
+            if (rapidFire) {
+                window.clearInterval(rapidFire)
+                rapidFire = null
+            }
+        }
+
+        target.addEventListener('keydown', event => {
+            if (event.key === key) {
+                if (!rapidFireTimeout) {
+                    if (triggerCallback) triggerCallback(event)
+                    rapidFireTimeout = window.setTimeout(startRapidFire, delay)
+                    event.preventDefault()
+                }
+            }
+        })
+        target.addEventListener('keyup', stopRapidFire)
     }
 }
