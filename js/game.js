@@ -102,41 +102,40 @@ class Game {
 
 
     initializeRapidFire () {
-        // The interval that triggers rapid fire. Used to abort rapid fire.
-        let rapidFire = null
-        // Only start rapidFire once at a time.
-        let alreadyStarting = false
         // The timeout that starts rapid fire. Used when aborting rapid fire before it's even started.
         let rapidFireTimeout = null
+        // The interval that triggers rapid fire. Used to abort rapid fire.
+        let rapidFire = null
 
-        const startRapidFire = ()  => {
-            // 143 ms between each fire to give ~7 executions per second.
-            console.log('Already Starting: ', alreadyStarting)
-            if (!alreadyStarting && !rapidFire) {
-                rapidFire = window.setInterval(() => this.nextDay(), 143)
-                alreadyStarting = true
+        // Timings (ms)
+        const delay = 500
+        // 143 ms between each fire to give ~7 executions per second.
+        const interval = 143
+
+        const rapidFireCallback = () => this.nextDay()
+
+        function startRapidFire () {
+            if (!rapidFire) {
+                rapidFire = window.setInterval(rapidFireCallback, interval)
             }
         }
 
-        const stopRapidFire = () => {
-            console.log('STOP ', rapidFire)
-            // Cancel rapid fire before it's even started.
+        function stopRapidFire () {
+            // Stop rapid fire before it's even started.
             if (rapidFireTimeout) {
                 window.clearTimeout(rapidFireTimeout)
             }
 
+            // Stop the active rapid fire interval.
             if (rapidFire) {
                 window.clearInterval(rapidFire)
-                alreadyStarting = false
                 rapidFire = null
             }
         }
 
-        // TODO: try to remove alreadyStarting and replace it with the clearTimeout solution below.
-
         this.ui.nextDay.addEventListener('pointerdown', event => {
             this.nextDay()
-            rapidFireTimeout = window.setTimeout(startRapidFire, 500)
+            rapidFireTimeout = window.setTimeout(startRapidFire, delay)
         })
         this.ui.nextDay.addEventListener('click', stopRapidFire)
         this.ui.nextDay.addEventListener('pointerout', stopRapidFire)
