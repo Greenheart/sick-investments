@@ -106,7 +106,12 @@ const Helpers = {
                 if (!rapidFireTimeout) {
                     if (triggerCallback) triggerCallback(event)
                     rapidFireTimeout = window.setTimeout(startRapidFire, delay)
+                }
+
+                // Prevent spacebar from scrolling the page when held down.
+                if (key === ' ') {
                     event.preventDefault()
+                    return false
                 }
             }
         })
