@@ -1,7 +1,8 @@
 class RapidFire {
-    constructor (rapidCallback, interval) {
+    constructor (rapidCallback, interval, stopCallback) {
         this.rapidCallback = rapidCallback
         this.interval = interval
+        this.stopCallback = stopCallback
         // The timeout that starts rapid fire. Used when aborting rapid fire before it's even started.
         this.rapidFireTimeout = null
         // The interval that triggers rapid fire. Used to abort rapid fire.
@@ -27,6 +28,8 @@ class RapidFire {
             window.clearInterval(this.rapidFire)
             this.rapidFire = null
         }
+
+        if (this.stopCallback) this.stopCallback()
     }
 
     /**
@@ -37,9 +40,10 @@ class RapidFire {
      * @param {number} delay - The delay (in ms) before rapid fire begins.
      * @param {number} interval - The time (in ms) between each call to rapidCallback.
      * @param {function} triggerCallback - Executed when the initial pointer event triggers rapid fire.
+     * @param {function} stopCallback - Executed when the rapid fire stops.
      */
-    static onPointerEvent (target, rapidCallback, delay = 0, interval = 100, triggerCallback = null) {
-        const rapidFire = new RapidFire(rapidCallback, interval)
+    static onPointerEvent ({ target, rapidCallback, delay = 0, interval = 100, triggerCallback = null, stopCallback = null }) {
+        const rapidFire = new RapidFire(rapidCallback, interval, stopCallback)
 
         target.addEventListener('pointerdown', event => {
             if (triggerCallback) triggerCallback()
@@ -57,10 +61,11 @@ class RapidFire {
      * @param {number} delay - The delay (in ms) before rapid fire begins.
      * @param {number} interval - The time (in ms) between each call to rapidCallback.
      * @param {function} triggerCallback - Executed when the initial event triggers rapid fire.
+     * @param {function} stopCallback - Executed when the rapid fire stops.
      * @param {EventTarget} target - The target element where rapid fire should be possible.
      */
-    static onKeydown (key, rapidCallback, delay = 0, interval = 100, triggerCallback = null, target = window) {
-        const rapidFire = new RapidFire(rapidCallback, interval)
+    static onKeydown ({ key, rapidCallback, delay = 0, interval = 100, triggerCallback = null, stopCallback = null, target = window }) {
+        const rapidFire = new RapidFire(rapidCallback, interval, stopCallback)
 
         target.addEventListener('keydown', event => {
             if (event.key === key) {
