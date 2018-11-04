@@ -1,6 +1,13 @@
 class Game {
     constructor (stocks) {
         this.day = 1
+        this.multipliers = [
+            { text: 'x 1', value: 1 },
+            { text: 'x 10', value: 10 },
+            { text: 'x 100', value: 100 },
+            { text: 'MAX' }
+        ]
+        this.multiplier = this.multipliers[0]
         this.player = new Player(this)
         this.ui = this.getDOMReferences()
         this.stocks = Stock.loadAll(this, stocks)
@@ -49,7 +56,18 @@ class Game {
             }
         })
 
+        this.ui.multiplier.innerText = this.multiplier.text
+        this.ui.multiplier.addEventListener('click', () => this.toggleMultiplier())
+
         this.initializeRapidFire()
+    }
+
+    toggleMultiplier () {
+        // Select the next multiplier by index, and start over from the beginning when necessary.
+        const next = this.multipliers.findIndex(m => m.text === this.multiplier.text) + 1
+        this.multiplier = this.multipliers[ next === this.multipliers.length ? 0 : next]
+
+        this.ui.multiplier.innerText = this.multiplier.text
     }
 
     initializeRapidFire () {
@@ -87,7 +105,8 @@ class Game {
             },
             stats: find('#stats'),
             stocks: find('#stocks'),
-            nextDay: find('#next-day')
+            nextDay: find('#next-day'),
+            multiplier: find('#multiplier')
         }
     }
 }
