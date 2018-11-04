@@ -112,7 +112,8 @@ button:not(:disabled):hover {
     transition: margin 0.05s ease-out;
 }
 
-#next-day:hover {
+#next-day:hover,
+#next-day.rapid-fire {
     box-shadow: 2px 2px 40px 2px rgba(0, 0, 0, .2);
     margin: 0 -2px 2px -2px;
     transition: margin 0.05s ease-in;
