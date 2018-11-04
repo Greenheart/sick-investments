@@ -72,7 +72,7 @@ class Game {
 
     updateMultiplierUI () {
         this.ui.multiplier.innerText = this.multiplier.text
-        this.stocks.all.forEach(s => s.updateMultiplier())
+        this.showAllStocks()
     }
 
     initializeRapidFire () {

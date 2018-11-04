@@ -62,7 +62,7 @@ class Stock {
         this.nextDay()
     }
 
-    updateMultiplier () {
+    updateMultiplierText () {
         // TODO: Combine this with this.updateButtons() in some way.
 
         const multiplier = this.game.multiplier.value
@@ -82,7 +82,6 @@ class Stock {
 
         this.buyMultiplier.innerText = Helpers.getDynamicValue(buyTexts, multiplier)
         this.sellMultiplier.innerText = Helpers.getDynamicValue(sellTexts, multiplier)
-        this.updateButtons(this.game.player.shares[this.id])
     }
 
     update () {
@@ -134,6 +133,7 @@ class Stock {
             // this.profit.innerText = shares.transactions.length ? currentValue - shares.totalInvestment : ''
         }
 
+        this.updateMultiplierText()
         this.updateButtons(shares)
     }
 
