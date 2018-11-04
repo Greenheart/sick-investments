@@ -104,6 +104,27 @@ button:not(:disabled):hover {
     cursor: pointer;
 }
 
+#sidebar .bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 110px;
+}
+
+#multiplier {
+    font-size: 20px;
+    text-transform: none;
+    background: var(--yellow);
+    padding: 12.5px;
+    transition: margin 0.05s ease-out;
+}
+
+#multiplier:hover {
+    box-shadow: 2px 2px 40px 2px rgba(0, 0, 0, .2);
+    margin: -2px -2px 0 -2px;
+    transition: margin 0.05s ease-in;
+}
+
 #next-day {
     font-size: 24px;
     background: var(--light-blue);
