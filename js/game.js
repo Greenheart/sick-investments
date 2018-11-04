@@ -58,8 +58,8 @@ class Game {
         const rapidCallback = triggerCallback
         const delay = 500
         const interval = 143 // 143 ms between each fire gives ~7 executions per second.
-        Helpers.pointerRapidFire(this.ui.nextDay, rapidCallback, delay, interval, triggerCallback)
-        Helpers.keydownRapidFire(' ', rapidCallback, delay, interval, triggerCallback)
+        RapidFire.onPointerEvent(this.ui.nextDay, rapidCallback, delay, interval, triggerCallback)
+        RapidFire.onKeydown(' ', rapidCallback, delay, interval, triggerCallback)
     }
 
     getDOMReferences () {
