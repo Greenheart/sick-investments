@@ -32,37 +32,14 @@ const Helpers = {
      * @param {function} triggerCallback - Executed when the initial pointer event triggers rapid fire.
      */
     pointerRapidFire (target, rapidCallback, delay = 0, interval = 100, triggerCallback = null) {
-        // The timeout that starts rapid fire. Used when aborting rapid fire before it's even started.
-        let rapidFireTimeout = null
-        // The interval that triggers rapid fire. Used to abort rapid fire.
-        let rapidFire = null
-
-        function startRapidFire () {
-            // Only start one rapid fire interval at a time.
-            if (!rapidFire) {
-                rapidFire = window.setInterval(rapidCallback, interval)
-            }
-        }
-
-        function stopRapidFire () {
-            // Stop rapid fire before it's even started.
-            if (rapidFireTimeout) {
-                window.clearTimeout(rapidFireTimeout)
-            }
-
-            // Stop the active rapid fire interval.
-            if (rapidFire) {
-                window.clearInterval(rapidFire)
-                rapidFire = null
-            }
-        }
+        const rapidFire = new RapidFire(rapidCallback, interval)
 
         target.addEventListener('pointerdown', event => {
             if (triggerCallback) triggerCallback()
-            rapidFireTimeout = window.setTimeout(startRapidFire, delay)
+            rapidFire.rapidFireTimeout = window.setTimeout(() => rapidFire.start(), delay)
         })
-        target.addEventListener('click', stopRapidFire)
-        target.addEventListener('pointerout', stopRapidFire)
+        target.addEventListener('click', () => rapidFire.stop())
+        target.addEventListener('pointerout', () => rapidFire.stop())
     },
     /**
      * Enable keydown events to trigger rapid fire for a callback.
@@ -75,37 +52,13 @@ const Helpers = {
      * @param {EventTarget} target - The target element where rapid fire should be possible.
      */
     keydownRapidFire (key, rapidCallback, delay = 0, interval = 100, triggerCallback = null, target = window) {
-        // The timeout that starts rapid fire. Used when aborting rapid fire before it's even started.
-        let rapidFireTimeout = null
-        // The interval that triggers rapid fire. Used to abort rapid fire.
-        let rapidFire = null
-
-        function startRapidFire () {
-            // Only start one rapid fire interval at a time.
-            if (!rapidFire) {
-                rapidFire = window.setInterval(rapidCallback, interval)
-            }
-        }
-
-        function stopRapidFire () {
-            // Stop rapid fire before it's even started.
-            if (rapidFireTimeout) {
-                window.clearTimeout(rapidFireTimeout)
-                rapidFireTimeout = null
-            }
-
-            // Stop the active rapid fire interval.
-            if (rapidFire) {
-                window.clearInterval(rapidFire)
-                rapidFire = null
-            }
-        }
+        const rapidFire = new RapidFire(rapidCallback, interval)
 
         target.addEventListener('keydown', event => {
             if (event.key === key) {
-                if (!rapidFireTimeout) {
+                if (!rapidFire.rapidFireTimeout) {
                     if (triggerCallback) triggerCallback(event)
-                    rapidFireTimeout = window.setTimeout(startRapidFire, delay)
+                    rapidFire.rapidFireTimeout = window.setTimeout(() => rapidFire.start(), delay)
                 }
 
                 // Prevent spacebar from scrolling the page when held down.
@@ -115,6 +68,38 @@ const Helpers = {
                 }
             }
         })
-        target.addEventListener('keyup', stopRapidFire)
+        target.addEventListener('keyup', () => rapidFire.stop())
+    }
+}
+
+class RapidFire {
+    constructor (rapidCallback, interval) {
+        this.rapidCallback = rapidCallback
+        this.interval = interval
+        // The timeout that starts rapid fire. Used when aborting rapid fire before it's even started.
+        this.rapidFireTimeout = null
+        // The interval that triggers rapid fire. Used to abort rapid fire.
+        this.rapidFire = null
+    }
+
+    start () {
+        // Only start one rapid fire interval at a time.
+        if (!this.rapidFire) {
+            this.rapidFire = window.setInterval(this.rapidCallback, this.interval)
+        }
+    }
+
+    stop () {
+        // Stop rapid fire before it's even started.
+        if (this.rapidFireTimeout) {
+            window.clearTimeout(this.rapidFireTimeout)
+            this.rapidFireTimeout = null
+        }
+
+        // Stop the active rapid fire interval.
+        if (this.rapidFire) {
+            window.clearInterval(this.rapidFire)
+            this.rapidFire = null
+        }
     }
 }
