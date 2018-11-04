@@ -82,6 +82,7 @@ class Stock {
 
         this.buyMultiplier.innerText = Helpers.getDynamicValue(buyTexts, multiplier)
         this.sellMultiplier.innerText = Helpers.getDynamicValue(sellTexts, multiplier)
+        this.updateButtons()
     }
 
     update () {
@@ -138,7 +139,10 @@ class Stock {
 
     updateButtons (shares) {
         // Check that the player can buy the amount set by the current multiplier.
-        if (this.game.player.balance >= this.price) {
+        const x = this.game.multiplier.value
+        const multiplier = (x === 'MAX') ? this.game.player.getMaxBuyAmount(this) : x
+
+        if (this.game.player.balance >= this.price * multiplier) {
             Helpers.enable(this.buyButton)
         } else {
             Helpers.disable(this.buyButton)
@@ -158,7 +162,7 @@ class Stock {
         container.querySelector('.price').innerText = this.price
         this.game.ui.stocks.appendChild(container)
 
-        // Append before changing attribute data since `continer` is  DocumentFragment and not a DOMElement
+        // Append before changing attribute data since `container` is  DocumentFragment and not a DOMElement
         const stock = this.game.ui.stocks.lastElementChild
         stock.setAttribute('data-stock-id', this.id)
         return stock
