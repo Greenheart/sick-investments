@@ -186,6 +186,10 @@ button:not(:disabled):hover {
     margin: 0 20px;
 }
 
+.stock .multiplier:not(:empty) {
+    margin-left: 5px;
+}
+
 .stock .actions button:disabled {
     opacity: .5;
 }
