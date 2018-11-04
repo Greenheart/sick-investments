@@ -5,7 +5,7 @@ class Game {
             { text: 'x 1', value: 1 },
             { text: 'x 10', value: 10 },
             { text: 'x 100', value: 100 },
-            { text: 'MAX' }
+            { text: 'MAX', value: 'MAX' }
         ]
         this.multiplier = this.multipliers[0]
         this.player = new Player(this)

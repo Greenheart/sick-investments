@@ -21,5 +21,19 @@ const Helpers = {
         if (reverseShift) precision = -precision
         const numArray = ('' + number).split('e')
         return +(numArray[0] + 'e' + (numArray[1] ? (+numArray[1] + precision) : precision))
+    },
+    /** Get a value for a key in an object, even if it's returned dynamically from a function.
+     *
+     * This allows dictionaries with mixed static and dynamic values.
+     *
+     * @param {object} o - The object that either contains static values or functions to generate dynamic values.
+     * @param {string} key - The key where to find the value.
+     */
+    getDynamicValue (o, key) {
+        if (typeof o[key] === 'function') {
+            return o[key]()
+        }
+
+        return o[key]
     }
 }

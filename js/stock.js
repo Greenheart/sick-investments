@@ -66,12 +66,22 @@ class Stock {
         // TODO: Combine this with this.updateButtons() in some way.
 
         const multiplier = this.game.multiplier.value
-        const buyAmount = multiplier ? multiplier : this.game.player.getMaxBuyAmount(this)
-        this.buyMultiplier.innerText = buyAmount
+        const buyTexts = {
+            '1': '',
+            '10': '10',
+            '100': '100',
+            'MAX': () => this.game.player.getMaxBuyAmount(this)
+        }
 
-        const shares = this.game.player.shares[this.id]
-        const sellAmount = (shares && multiplier > shares.amount) ? shares.amount : multiplier
-        this.sellMultiplier.innerText = sellAmount
+        const sellTexts = {
+            '1': '',
+            '10': '10',
+            '100': '100',
+            'MAX': 'All'
+        }
+
+        this.buyMultiplier.innerText = Helpers.getDynamicValue(buyTexts, multiplier)
+        this.sellMultiplier.innerText = Helpers.getDynamicValue(sellTexts, multiplier)
     }
 
     update () {
@@ -127,6 +137,7 @@ class Stock {
     }
 
     updateButtons (shares) {
+        // Check that the player can buy the amount set by the current multiplier.
         if (this.game.player.balance >= this.price) {
             Helpers.enable(this.buyButton)
         } else {
