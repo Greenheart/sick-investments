@@ -31,6 +31,10 @@ class Player {
         console.log('BUY: ', shares)
     }
 
+    getMaxBuyAmount (stock) {
+        return Math.floor(this.balance / stock.price)
+    }
+
     sell (stock) {
         const shares = this.shares[stock.id]
         if (shares && shares.amount) {

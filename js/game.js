@@ -67,7 +67,12 @@ class Game {
         const next = this.multipliers.findIndex(m => m.text === this.multiplier.text) + 1
         this.multiplier = this.multipliers[ next === this.multipliers.length ? 0 : next]
 
+        this.updateMultiplierUI()
+    }
+
+    updateMultiplierUI () {
         this.ui.multiplier.innerText = this.multiplier.text
+        this.stocks.all.forEach(s => s.updateMultiplier())
     }
 
     initializeRapidFire () {

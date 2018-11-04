@@ -33,7 +33,9 @@ class Stock {
         this.sign = this.viewComponent.querySelector('.sign')
         this.profit = this.viewComponent.querySelector('.profit')
         this.buyButton = this.viewComponent.querySelector('[data-action="buy"]')
+        this.buyMultiplier = this.buyButton.querySelector('.multiplier')
         this.sellButton = this.viewComponent.querySelector('[data-action="sell"]')
+        this.sellMultiplier = this.sellButton.querySelector('.multiplier')
     }
 
     updatePrice () {
@@ -58,6 +60,18 @@ class Stock {
         this.price = Helpers.precisionRound(this.price * changeFactor, 1)
         console.log(this.price)
         this.nextDay()
+    }
+
+    updateMultiplier () {
+        // TODO: Combine this with this.updateButtons() in some way.
+
+        const multiplier = this.game.multiplier.value
+        const buyAmount = multiplier ? multiplier : this.game.player.getMaxBuyAmount(this)
+        this.buyMultiplier.innerText = buyAmount
+
+        const shares = this.game.player.shares[this.id]
+        const sellAmount = (shares && multiplier > shares.amount) ? shares.amount : multiplier
+        this.sellMultiplier.innerText = sellAmount
     }
 
     update () {
