@@ -59,6 +59,12 @@ class Game {
         this.ui.multiplier.innerText = this.multiplier.text
         this.ui.multiplier.addEventListener('click', () => this.toggleMultiplier())
 
+        window.addEventListener('keydown', event => {
+            if (event.key.toUpperCase() === 'X') {
+                this.toggleMultiplier()
+            }
+        })
+
         this.initializeRapidFire()
     }
 
