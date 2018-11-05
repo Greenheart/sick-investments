@@ -143,7 +143,7 @@ class Stock {
         const sellMultiplier = this.game.player.getSellMultiplier(this)
 
         // TODO: disable if any multiplier === 0
-        if (this.game.player.balance >= this.price * buyMultiplier) {
+        if (buyMultiplier && this.game.player.balance >= this.price * buyMultiplier) {
             Helpers.enable(this.buyButton)
         } else {
             Helpers.disable(this.buyButton)
