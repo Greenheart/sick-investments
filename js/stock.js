@@ -70,7 +70,7 @@ class Stock {
             '1': '',
             '10': '10',
             '100': '100',
-            'MAX': () => this.game.player.getMaxBuyAmount(this)
+            'MAX': () => this.game.player.getMaxBuyAmount(this) || ''
         }
 
         const sellTexts = {
