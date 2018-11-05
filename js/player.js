@@ -41,14 +41,16 @@ class Player {
     sell (stock) {
         const shares = this.shares[stock.id]
         if (shares && shares.amount) {
-            const amount = 1
-            shares.amount -= amount
+            const x = this.game.multiplier.value
+            const sellMultiplier = (x === 'MAX') ? shares.amount : x
+
+            shares.amount -= sellMultiplier
             shares.transactions.push(
-                new Transaction(Transaction.SELL, stock.price, amount, this.game.day)
+                new Transaction(Transaction.SELL, stock.price, sellMultiplier, this.game.day)
             )
-            this.balance = Helpers.precisionRound(this.balance + stock.price, 1)
+            this.balance = Helpers.precisionRound(this.balance + stock.price * sellMultiplier, 1)
             // TODO: Avoid investment from going below 0.
-            shares.totalInvestment = Helpers.precisionRound(shares.totalInvestment - stock.price, 1)
+            shares.totalInvestment = Helpers.precisionRound(shares.totalInvestment - stock.price * sellMultiplier, 1)
             console.log('SELL: ', shares)
         }
     }
