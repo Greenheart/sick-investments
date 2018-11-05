@@ -21,13 +21,16 @@ class Player {
         // IDEA: Allow custom amounts other than 1.
         // Or use `player.pendingTransactions` to store temporary transactions until the day is over.
         // Then call player.finalizeTransactions() when the day is over to store actual transactions in `player.shares`
-        const amount = 1
-        shares.amount += amount
+
+        const x = this.game.multiplier.value
+        const buyMultiplier = (x === 'MAX') ? this.getMaxBuyAmount(stock) : x
+
+        shares.amount += buyMultiplier
         shares.transactions.push(
-            new Transaction(Transaction.BUY, stock.price, amount, this.game.day)
+            new Transaction(Transaction.BUY, stock.price, buyMultiplier, this.game.day)
         )
-        this.balance = Helpers.precisionRound(this.balance - stock.price, 1)
-        shares.totalInvestment = Helpers.precisionRound(shares.totalInvestment + stock.price, 1)
+        this.balance = Helpers.precisionRound(this.balance - stock.price * buyMultiplier, 1)
+        shares.totalInvestment = Helpers.precisionRound(shares.totalInvestment + stock.price * buyMultiplier, 1)
         console.log('BUY: ', shares)
     }
 
