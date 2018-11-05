@@ -139,22 +139,17 @@ class Stock {
 
     updateButtons (shares) {
         // Check that the player can buy the amount set by the current multiplier.
-        const x = this.game.multiplier.value
-        let buyMultiplier = x
-        let sellMultiplier = x
+        const buyMultiplier = this.game.player.getBuyMultiplier(this)
+        const sellMultiplier = this.game.player.getSellMultiplier(this)
 
-        if (x === 'MAX') {
-            buyMultiplier = this.game.player.getMaxBuyAmount(this)
-            sellMultiplier = shares ? shares.amount : 0
-        }
-
+        // TODO: disable if any multiplier === 0
         if (this.game.player.balance >= this.price * buyMultiplier) {
             Helpers.enable(this.buyButton)
         } else {
             Helpers.disable(this.buyButton)
         }
 
-        if (shares && shares.amount && shares.amount >= sellMultiplier) {
+        if (shares && shares.amount >= sellMultiplier) {
             Helpers.enable(this.sellButton)
         } else {
             Helpers.disable(this.sellButton)

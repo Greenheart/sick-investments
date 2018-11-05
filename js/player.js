@@ -21,9 +21,7 @@ class Player {
         // IDEA: Allow custom amounts other than 1.
         // Or use `player.pendingTransactions` to store temporary transactions until the day is over.
         // Then call player.finalizeTransactions() when the day is over to store actual transactions in `player.shares`
-
-        const x = this.game.multiplier.value
-        const buyMultiplier = (x === 'MAX') ? this.getMaxBuyAmount(stock) : x
+        const buyMultiplier = this.getBuyMultiplier(stock)
 
         shares.amount += buyMultiplier
         shares.transactions.push(
@@ -34,15 +32,10 @@ class Player {
         console.log('BUY: ', shares)
     }
 
-    getMaxBuyAmount (stock) {
-        return Math.floor(this.balance / stock.price)
-    }
-
     sell (stock) {
         const shares = this.shares[stock.id]
         if (shares && shares.amount) {
-            const x = this.game.multiplier.value
-            const sellMultiplier = (x === 'MAX') ? shares.amount : x
+            const sellMultiplier = this.getSellMultiplier(stock)
 
             shares.amount -= sellMultiplier
             shares.transactions.push(
@@ -53,6 +46,25 @@ class Player {
             shares.totalInvestment = Helpers.precisionRound(shares.totalInvestment - stock.price * sellMultiplier, 1)
             console.log('SELL: ', shares)
         }
+    }
+
+    getMaxBuyAmount (stock) {
+        return Math.floor(this.balance / stock.price)
+    }
+
+    getMaxSellAmount (stock) {
+        const shares = this.shares[stock.id]
+        return shares ? shares.amount : 0
+    }
+
+    getBuyMultiplier (stock) {
+        const x = this.game.multiplier.value
+        return (x === 'MAX') ? this.getMaxBuyAmount(stock) : x
+    }
+
+    getSellMultiplier (stock) {
+        const x = this.game.multiplier.value
+        return (x === 'MAX') ? this.getMaxSellAmount(stock) : x
     }
 
     updateProfit (shares, stock) {
